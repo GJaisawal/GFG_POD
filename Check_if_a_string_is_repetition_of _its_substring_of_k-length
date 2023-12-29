@@ -1,0 +1,70 @@
+Given a string s, check if it is possible to convert it into a string that is the repetition of a substring of length k.
+To convert, we will select two substrings, of length k starting at index i and j (zero-based indexing) such that i and j are divisible by k,
+and we will replace one substring with the other.
+............................................................................................................................................
+
+Example 1:
+
+Input:
+N = 4
+K = 2
+S = "bdac"
+Output: 1
+Explanation: We can replace either
+"bd" with "ac" or "ac" with "bd"
+.........................................
+
+Example 2:
+
+Input: 
+N = 5
+K = 2
+S = "abcde"
+Output: 0
+Explanation: Since n % k != 0, it's not 
+possible to convert s into a string which
+is a concatanation of a substring with 
+length k.
+.........................................
+
+Code : 
+
+class Solution {
+public:
+    int kSubstrConcat(int n, string s, int k) {
+        // Your Code Here
+        
+        // Check if the length of the string is divisible by k
+        if (n % k != 0) {
+            return 0; // If not, return 0
+        }
+        
+        // Create an unordered map to store counts of substrings
+        unordered_map<string, int> mp;
+        
+        // Iterate through the string with a step of k
+        for (int i = 0; i < n; i += k) {
+            mp[s.substr(i, k)]++; // Extract substrings of length k and increment their count in the map
+        }
+        
+        // Return 1 if the number of distinct substrings is at most 2, else return 0
+        return mp.size() <= 2 ? 1 : 0;
+    }
+};
+.............................................................................................................
+
+Explanation : 
+
+Map for Counting Substrings:
+
+    It uses an unordered map (mp) to store the counts of substrings. The key of the map is the substring itself, and the value is the count of occurrences of that substring.
+
+Iteration through String:
+
+    The for loop iterates through the string with a step of k, and in each iteration, it extracts a substring of length k starting from the current index (i)
+    and increments its count in the map.
+
+Result:
+
+    After processing all substrings, the function returns 1 if the size of the map is less than or equal to 2 (indicating at most two distinct substrings are present),
+    and 0 otherwise.
